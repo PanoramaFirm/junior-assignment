@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multiple Eniro search</title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="container">
+<script type="text/javascript">
+    function fetchWeather(companyId, latitude, longitude) {
+        if(latitude != '0.0' || longitude != '0.0') {
+            $( "#weather-" + companyId ).html(  '<img src="https://cdnjs.cloudflare.com/ajax/libs/timelinejs/2.25/css/loading.gif" />' );
+            $.get( "/weather?latitude=" + latitude + "&longitude=" + longitude, function( data ) {
+                var weatherTd = $( "#weather-" + companyId );
+                $(weatherTd).html(
+                    '<img src="https://www.metaweather.com/static/img/weather/png/64/' + data + '.png" />'
+                );
+            });
+        } else {
+            $( "#weather-" + companyId ).text('location missing');
+        }
+
+
+
+    }
+
+</script>
+    <div class="jumbotron">
+        <h1><a href="/">< New search</a></h1>
+    </div>
+    <div class="container">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Showing {{resultsCount}} search results:</div>
+
+            <!-- Table -->
+            <table class="table">
+                <thead>
+                <th>Rating</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Address</th>
+                <th>Contact</th>
+                <th>Homepage</th>
+                </thead>
+                <tbody>
+                {{#companies}}
+                <tr>
+                    <td id="weather-{{eniroId}}"><button type="button" class="btn" onclick="fetchWeather('{{eniroId}}','{{coordinates.latitude}}', '{{coordinates.longitude}}')">Fetch weather</button></td>
+                    <td>{{info.name}}</td>
+                    <td>{{#info.description}}{{.}}{{/info.description}}</td>
+                    <td>
+                        {{#address.street}}{{.}}{{/address.street}}
+                        {{#address.postCode}},{{.}}{{/address.postCode}}
+                        {{#address.postArea}},{{.}}{{/address.postArea}}
+                    </td>
+                    <td>
+                        {{#phoneNumbers}}
+                        {{number}}{{#label}} - {{.}}{{/label}}<br/>
+                        {{/phoneNumbers}}
+                    </td>
+                    <td>
+                        {{#homePageUrl}}<a href="{{.}}">Home page</a>{{/homePageUrl}}
+                    </td>
+                </tr>
+                {{/companies}}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div><!-- /.row -->
+
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>
