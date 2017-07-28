@@ -1,4 +1,4 @@
-# junior-assignment
+# Junior Java Developer assignment resources
 
 ## What it is
 
