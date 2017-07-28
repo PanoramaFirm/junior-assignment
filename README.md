@@ -4,7 +4,7 @@
 
 This is a task for candidates for junior java dev role in our organization. You should receive a PDF with instructions from the recruiter.
 
-I you'd like to apply for a job visit [this page](http://praca.eniro.pl/it.html).
+If you'd like to apply for a job visit [this page](http://praca.eniro.pl/it.html).
 
 ## What it does
 
